@@ -336,22 +336,22 @@ def getallwx():
 def qtstart():
     global ctimer, wxtimer, temptimer
     global manager
-    global objradar1
-    global objradar2
-    global objradar3
-    global objradar4
+    #global objradar1
+    #global objradar2
+    #global objradar3
+    #global objradar4
 
     getallwx()
 
     gettemp()
-
+    '''
     objradar1.start(Config.radar_refresh * 60)
     objradar1.wxstart()
     objradar2.start(Config.radar_refresh * 60)
     objradar2.wxstart()
     objradar3.start(Config.radar_refresh * 60)
     objradar4.start(Config.radar_refresh * 60)
-
+    '''
     ctimer = QtCore.QTimer()
     ctimer.timeout.connect(tick)
     ctimer.start(1000)
@@ -365,7 +365,7 @@ def qtstart():
     temptimer.timeout.connect(gettemp)
     temptimer.start(1000 * 10 * 60 + random.uniform(1000, 10000))
 
-
+'''
 class Radar(QtGui.QLabel):
 
     def __init__(self, parent, radar, rect, myname):
@@ -628,26 +628,27 @@ class Radar(QtGui.QLabel):
         except Exception:
             pass
 
-
+'''
 def realquit():
     QtGui.QApplication.exit(0)
 
 
 def myquit(a=0, b=0):
-    global objradar1, objradar2, objradar3, objradar4
+    #global objradar1, objradar2, objradar3, objradar4
     global ctimer, wtimer, temptimer
-
+    '''
     objradar1.stop()
     objradar2.stop()
     objradar3.stop()
     objradar4.stop()
+    '''
     ctimer.stop()
     wxtimer.stop()
     temptimer.stop()
 
     QtCore.QTimer.singleShot(30, realquit)
 
-
+'''
 def fixupframe(frame, onoff):
     for child in frame.children():
         if isinstance(child, Radar):
@@ -657,7 +658,7 @@ def fixupframe(frame, onoff):
             else:
                 # print "calling wxstop on radar on ",frame.objectName()
                 child.wxstop()
-
+'''
 
 def nextframe(plusminus):
     global frames, framep
@@ -669,7 +670,7 @@ def nextframe(plusminus):
     if framep < 0:
         framep = len(frames) - 1
     frames[framep].setVisible(True)
-    fixupframe(frames[framep], True)
+    # fixupframe(frames[framep], True)
 
 
 class myMain(QtGui.QWidget):
@@ -722,12 +723,12 @@ try:
     Config.weather_refresh
 except AttributeError:
     Config.weather_refresh = 30   # minutes
-
+'''
 try:
     Config.radar_refresh
 except AttributeError:
     Config.radar_refresh = 10    # minutes
-
+'''
 try:
     Config.fontattr
 except AttributeError:
@@ -910,7 +911,7 @@ else:
     glow.setColor(QColor(dcolor))
     clockface.setGraphicsEffect(glow)
 
-
+'''
 radar1rect = QtCore.QRect(3 * xscale, 344 * yscale, 300 * xscale, 275 * yscale)
 objradar1 = Radar(frame1, Config.radar1, radar1rect, "radar1")
 
@@ -923,7 +924,7 @@ objradar3 = Radar(frame2, Config.radar3, radar3rect, "radar3")
 radar4rect = QtCore.QRect(726 * xscale, 50 * yscale,
                           700 * xscale, 700 * yscale)
 objradar4 = Radar(frame2, Config.radar4, radar4rect, "radar4")
-
+'''
 
 datex = QtGui.QLabel(frame1)
 datex.setObjectName("datex")
